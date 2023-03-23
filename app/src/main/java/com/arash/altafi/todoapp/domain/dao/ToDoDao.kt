@@ -3,6 +3,7 @@ package com.arash.altafi.todoapp.domain.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.arash.altafi.todoapp.domain.models.ToDo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoDao {
@@ -18,7 +19,7 @@ interface ToDoDao {
     @Delete
     suspend fun deleteToDo(toDo: ToDo)
 
-    @Query("Select * from ToDo order by id asc") //desc
-    fun getAllToDo() : LiveData<List<ToDo>>
+    @Query("SELECT * FROM ToDo ORDER BY id ASC") //desc
+    fun getAllToDo() : Flow<List<ToDo>>
 
 }

@@ -1,13 +1,11 @@
 package com.arash.altafi.todoapp.domain.repositories
 
-import androidx.lifecycle.LiveData
 import com.arash.altafi.todoapp.domain.dao.ToDoDao
 import com.arash.altafi.todoapp.domain.models.ToDo
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class ToDoRepository @Inject constructor(private var toDoDao: ToDoDao) {
-
-    private var allToDoList: LiveData<List<ToDo>> = toDoDao.getAllToDo()
 
     suspend fun insertToDo(toDo: ToDo) {
         toDoDao.insertToDo(toDo)
@@ -21,8 +19,6 @@ class ToDoRepository @Inject constructor(private var toDoDao: ToDoDao) {
         toDoDao.deleteToDo(toDo)
     }
 
-    fun getAllToDo(): LiveData<List<ToDo>> {
-        return allToDoList
-    }
+    fun getAllToDo(): Flow<List<ToDo>> = toDoDao.getAllToDo()
 
 }

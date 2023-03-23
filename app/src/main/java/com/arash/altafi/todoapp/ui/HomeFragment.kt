@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.arash.altafi.todoapp.databinding.FragmentHomeBinding
@@ -53,8 +54,15 @@ class HomeFragment : Fragment() {
         adapter = RecyclerAdapter()
         rcTodo.adapter = adapter
 
-        toDoViewModel.getAllData().observe(viewLifecycleOwner) {
-            adapter.setDataList(it)
+        /* // To Get All Data
+        CoroutineScope(Dispatchers.Main).launch {
+            toDoViewModel.getAllData()
+        }*/
+
+        lifecycleScope.launch {
+            toDoViewModel.liveToDo.collect {
+                adapter.setDataList(it)
+            }
         }
 
         fabAdd.setOnClickListener {
@@ -103,7 +111,6 @@ class HomeFragment : Fragment() {
                         done = false
                     )
                     CoroutineScope(Dispatchers.Main).launch { toDoViewModel.update(toDo) }
-                    MainScope().launch { toDoViewModel.insert(toDo) }
                     Toast.makeText(requireContext(), "Todo Updated", Toast.LENGTH_SHORT).show()
                 } else {
                     val toDo = ToDo(
