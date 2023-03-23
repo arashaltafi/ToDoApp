@@ -22,6 +22,7 @@ class DatabaseModule {
             .fallbackToDestructiveMigration()
             .build()
 
+        //allowMainThreadQueries()
         //createFromAsset("database/myapp.db")  // For db first
         // fallbackToDestructiveMigration انتقال اطلاعات و دیتاهای جدید به دیتابیس با دستور
     }
