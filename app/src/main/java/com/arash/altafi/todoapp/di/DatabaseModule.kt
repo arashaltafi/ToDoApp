@@ -21,6 +21,8 @@ class DatabaseModule {
         return Room.databaseBuilder(context, ToDoDatabase::class.java, "toDo.db")
             .fallbackToDestructiveMigration()
             .build()
+
+        //createFromAsset("database/myapp.db")  // For db first
         // fallbackToDestructiveMigration انتقال اطلاعات و دیتاهای جدید به دیتابیس با دستور
     }
 
