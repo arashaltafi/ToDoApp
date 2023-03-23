@@ -1,8 +1,8 @@
-package com.arash.altafi.todoapp.dao
+package com.arash.altafi.todoapp.domain.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.arash.altafi.todoapp.models.ToDo
+import com.arash.altafi.todoapp.domain.models.ToDo
 
 @Dao
 interface ToDoDao {

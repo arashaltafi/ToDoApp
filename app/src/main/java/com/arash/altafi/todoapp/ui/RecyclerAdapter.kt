@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.adapters
+package com.arash.altafi.todoapp.ui
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.arash.altafi.todoapp.R
-import com.arash.altafi.todoapp.models.ToDo
+import com.arash.altafi.todoapp.domain.models.ToDo
 
 class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
 
     private val dataList = ArrayList<ToDo>()
-    private lateinit var onItemClickListener: OnItemClickListener
+    var onItemStateChange: ((ToDo, Boolean) -> Unit)? = null
+    var onItemClick: ((ToDo) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoHolder {
         val view: View =
@@ -27,13 +28,13 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
         holder.checkBox.text = item.title
 
         holder.lnrCheck.setOnClickListener {
-            onItemClickListener.onItemClick(item)
+            onItemClick?.invoke(item)
         }
 
         holder.checkBox.isChecked = item.done
 
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            onItemClickListener.onItemStateChange(item, isChecked)
+            onItemStateChange?.invoke(item, isChecked)
         }
 
     }
@@ -51,19 +52,9 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
         return dataList[position]
     }
 
-    fun setOnItemClick(onItemClickListener: OnItemClickListener) {
-        this.onItemClickListener = onItemClickListener
-    }
-
     inner class ToDoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var checkBox: CheckBox = itemView.findViewById(R.id.chx)
         var lnrCheck: LinearLayout = itemView.findViewById(R.id.lnr_checked)
     }
-
-}
-
-interface OnItemClickListener {
-    fun onItemClick(toDo: ToDo)
-    fun onItemStateChange(toDo: ToDo, isChecked: Boolean)
 
 }

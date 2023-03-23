@@ -1,14 +1,14 @@
-package com.arash.altafi.todoapp.viewModels
+package com.arash.altafi.todoapp.ui
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.arash.altafi.todoapp.models.ToDo
-import com.arash.altafi.todoapp.repositories.ToDoRepository
+import androidx.lifecycle.ViewModel
+import com.arash.altafi.todoapp.domain.models.ToDo
+import com.arash.altafi.todoapp.domain.repositories.ToDoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ToDoViewModel(application: Application) : AndroidViewModel(application) {
-
-    private var repository: ToDoRepository = ToDoRepository(application)
+@HiltViewModel
+class ToDoViewModel @Inject constructor(private var repository: ToDoRepository) : ViewModel() {
 
     suspend fun insert(toDo: ToDo) {
         repository.insertToDo(toDo)

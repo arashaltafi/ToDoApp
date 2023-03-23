@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.models
+package com.arash.altafi.todoapp.domain.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

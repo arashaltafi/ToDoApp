@@ -1,16 +1,13 @@
-package com.arash.altafi.todoapp.handlers
+package com.arash.altafi.todoapp.ui.handlers
 
-import android.content.Context
-import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.arash.altafi.todoapp.adapters.RecyclerAdapter
-import com.arash.altafi.todoapp.viewModels.ToDoViewModel
+import com.arash.altafi.todoapp.ui.RecyclerAdapter
+import com.arash.altafi.todoapp.ui.ToDoViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 abstract class SwipeToDeleteCallback(
-    private val context: Context,
     private val viewModel: ToDoViewModel,
     private val adapter: RecyclerAdapter
 ) :
@@ -19,7 +16,6 @@ abstract class SwipeToDeleteCallback(
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         MainScope().launch {
             viewModel.delete(adapter.getToDo(viewHolder.adapterPosition))
-            Toast.makeText(context, "ToDo Item Deleted", Toast.LENGTH_SHORT).show()
         }
     }
 
