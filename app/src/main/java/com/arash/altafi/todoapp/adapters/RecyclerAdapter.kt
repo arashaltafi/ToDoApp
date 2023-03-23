@@ -14,7 +14,6 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
 
     private val dataList = ArrayList<ToDo>()
     private lateinit var onItemClickListener: OnItemClickListener
-    private lateinit var onItemDoneStateListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoHolder {
         val view: View =
@@ -34,7 +33,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
         holder.checkBox.isChecked = item.done
 
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
-            onItemDoneStateListener.onItemStateChange(item, isChecked)
+            onItemClickListener.onItemStateChange(item, isChecked)
         }
 
     }
@@ -54,10 +53,6 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
 
     fun setOnItemClick(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
-    }
-
-    fun setOnItemStateClick(onItemDoneStateListener: OnItemClickListener) {
-        this.onItemDoneStateListener = onItemDoneStateListener
     }
 
     inner class ToDoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
