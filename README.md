@@ -1,4 +1,10 @@
 # ToDoApp
 
 ToDo Project
-Created With Room and MVVM and SwipeRefresh
+
+Room
+MVVM
+SwipeRefresh
+Hilt
+Navigation Component
+Coroutine Flow
