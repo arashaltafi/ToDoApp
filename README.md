@@ -2,8 +2,9 @@
 
 ToDo Project
 
-Room
-MVVM
+- Room
+* MVVM
+* 
 SwipeRefresh
 Hilt
 Navigation Component
