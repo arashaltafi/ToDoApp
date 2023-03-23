@@ -8,7 +8,7 @@ import com.arash.altafi.todoapp.repositories.ToDoRepository
 
 class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var repository : ToDoRepository = ToDoRepository(application)
+    private var repository: ToDoRepository = ToDoRepository(application)
     private var allToDoList = repository.getAllToDo()
 
     suspend fun insert(toDo: ToDo) {

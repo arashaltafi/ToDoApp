@@ -18,7 +18,7 @@ abstract class ToDoDatabase : RoomDatabase() {
             if (database == null) {
                 database = Room.databaseBuilder(context, ToDoDatabase::class.java, "toDo.db")
                     .fallbackToDestructiveMigration().build()
-                // fallbackToDestructiveMigrationانتقال اطلاعات و دیتاهای جدید به دیتابیس با دستور
+                // fallbackToDestructiveMigration انتقال اطلاعات و دیتاهای جدید به دیتابیس با دستور
             }
             return database!!
         }

@@ -10,14 +10,14 @@ import com.google.android.material.button.MaterialButton
 class AddToDoActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_ID : String = "EXTRA_ID"
-        const val EXTRA_TITLE : String = "EXTRA_TITLE"
-        const val EXTRA_DESC : String = "EXTRA_DESC"
+        const val EXTRA_ID: String = "EXTRA_ID"
+        const val EXTRA_TITLE: String = "EXTRA_TITLE"
+        const val EXTRA_DESC: String = "EXTRA_DESC"
     }
 
-    private lateinit var btnAdd : MaterialButton
-    private lateinit var edtTitle : EditText
-    private lateinit var edtDescription : EditText
+    private lateinit var btnAdd: MaterialButton
+    private lateinit var edtTitle: EditText
+    private lateinit var edtDescription: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,14 +29,13 @@ class AddToDoActivity : AppCompatActivity() {
     private fun init() {
         bindViews()
 
-        val inputIntent : Intent = intent
+        val inputIntent: Intent = intent
         if (inputIntent.hasExtra(EXTRA_ID)) {
             title = "Edit ToDo"
             edtTitle.setText(inputIntent.getStringExtra(EXTRA_TITLE))
             edtDescription.setText(inputIntent.getStringExtra(EXTRA_DESC))
             btnAdd.text = "Update Item"
-        }
-        else {
+        } else {
             title = "Add ToDo"
             btnAdd.text = "Add New Item"
         }
@@ -45,17 +44,16 @@ class AddToDoActivity : AppCompatActivity() {
             val title = edtTitle.text.toString().trim()
             val description = edtDescription.text.toString().trim()
             if (title.isEmpty() || description.isEmpty()) {
-                Toast.makeText(this , "Please fill title and description" , Toast.LENGTH_SHORT).show()
-            }
-            else {
+                Toast.makeText(this, "Please fill title and description", Toast.LENGTH_SHORT).show()
+            } else {
                 val data = Intent()
-                val id = intent.getIntExtra(EXTRA_ID , -1)
+                val id = intent.getIntExtra(EXTRA_ID, -1)
                 if (id != -1) {
-                    data.putExtra(EXTRA_ID , id)
+                    data.putExtra(EXTRA_ID, id)
                 }
-                data.putExtra(EXTRA_TITLE , title)
-                data.putExtra(EXTRA_DESC , description)
-                setResult(RESULT_OK , data)
+                data.putExtra(EXTRA_TITLE, title)
+                data.putExtra(EXTRA_DESC, description)
+                setResult(RESULT_OK, data)
                 finish()
             }
         }

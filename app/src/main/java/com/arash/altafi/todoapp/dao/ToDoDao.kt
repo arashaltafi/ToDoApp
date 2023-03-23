@@ -21,6 +21,4 @@ interface ToDoDao {
     @Query("Select * from ToDo order by id asc") //desc
     fun getAllToDo() : LiveData<List<ToDo>>
 
-    //LiveData => Live + Data
-
 }

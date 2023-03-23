@@ -8,8 +8,8 @@ import com.arash.altafi.todoapp.models.ToDo
 
 class ToDoRepository(application: Application) {
 
-    private var toDoDao : ToDoDao
-    private var allToDoList : LiveData<List<ToDo>>
+    private var toDoDao: ToDoDao
+    private var allToDoList: LiveData<List<ToDo>>
 
     init {
         val database = ToDoDatabase.getInstance(application)

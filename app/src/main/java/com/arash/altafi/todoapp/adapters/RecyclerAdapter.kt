@@ -1,6 +1,6 @@
 package com.arash.altafi.todoapp.adapters
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arash.altafi.todoapp.R
 import com.arash.altafi.todoapp.models.ToDo
 
-class RecyclerAdapter(private val context : Context) : RecyclerView.Adapter<ToDoHolder>() {
+class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
 
     private val dataList = ArrayList<ToDo>()
-    lateinit var onItemClickListener: OnItemClickListener
-    lateinit var onItemDoneStateListener: OnItemDoneStateListener
+    private lateinit var onItemClickListener: OnItemClickListener
+    private lateinit var onItemDoneStateListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoHolder {
-        var view : View = LayoutInflater.from(parent.context).inflate(R.layout.item_todo,parent,false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_todo, parent, false)
         return ToDoHolder(view)
     }
 
     override fun onBindViewHolder(holder: ToDoHolder, position: Int) {
-        val item = dataList.get(position)
+        val item = dataList[position]
 
         holder.checkBox.text = item.title
 
@@ -32,14 +33,15 @@ class RecyclerAdapter(private val context : Context) : RecyclerView.Adapter<ToDo
 
         holder.checkBox.isChecked = item.done
 
-        holder.checkBox.setOnCheckedChangeListener { buttonView , isChecked ->
-            onItemDoneStateListener.onItemStateChange(item , isChecked)
+        holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            onItemDoneStateListener.onItemStateChange(item, isChecked)
         }
 
     }
 
-    override fun getItemCount(): Int =  dataList.size
+    override fun getItemCount(): Int = dataList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setDataList(list: List<ToDo>) {
         dataList.clear()
         dataList.addAll(list)
@@ -54,23 +56,19 @@ class RecyclerAdapter(private val context : Context) : RecyclerView.Adapter<ToDo
         this.onItemClickListener = onItemClickListener
     }
 
-    fun setOnItemStateClick(onItemDoneStateListener: OnItemDoneStateListener) {
+    fun setOnItemStateClick(onItemDoneStateListener: OnItemClickListener) {
         this.onItemDoneStateListener = onItemDoneStateListener
     }
 
-}
-
-class ToDoHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
-    var checkBox : CheckBox = itemView.findViewById(R.id.chx)
-    var lnrCheck : LinearLayout = itemView.findViewById(R.id.lnr_checked)
+    inner class ToDoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var checkBox: CheckBox = itemView.findViewById(R.id.chx)
+        var lnrCheck: LinearLayout = itemView.findViewById(R.id.lnr_checked)
+    }
 
 }
 
 interface OnItemClickListener {
     fun onItemClick(toDo: ToDo)
-}
-
-interface OnItemDoneStateListener {
     fun onItemStateChange(toDo: ToDo, isChecked: Boolean)
+
 }
