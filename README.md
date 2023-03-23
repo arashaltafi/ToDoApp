@@ -3,9 +3,8 @@
 ToDo Project
 
 - Room
-* MVVM
-* 
-SwipeRefresh
-Hilt
-Navigation Component
-Coroutine Flow
+- MVVM
+- SwipeRefresh
+- Hilt
+- Navigation Component
+- Coroutine Flow
