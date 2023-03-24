@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.ui
+package com.arash.altafi.todoapp.ui.room
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.arash.altafi.todoapp.databinding.FragmentHomeBinding
-import com.arash.altafi.todoapp.ui.handlers.SwipeToDeleteCallback
+import com.arash.altafi.todoapp.ui.room.handlers.SwipeToDeleteCallback
 import com.arash.altafi.todoapp.domain.models.ToDo
 import com.arash.altafi.todoapp.utils.Constance
 import com.arash.altafi.todoapp.utils.getBackStackLiveData

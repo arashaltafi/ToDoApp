@@ -1,6 +1,6 @@
 package com.arash.altafi.todoapp.di
 
-import com.arash.altafi.todoapp.ui.RecyclerAdapter
+import com.arash.altafi.todoapp.ui.room.RecyclerAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

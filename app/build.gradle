@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
+    id "io.objectbox"
 }
 
 android {
@@ -68,6 +69,10 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.5.0"
     kapt "androidx.room:room-compiler:2.5.0"
     implementation "androidx.room:room-ktx:2.5.0"
+
+    //ObjectBox
+    implementation "io.objectbox:objectbox-kotlin:3.5.1"
+    kapt "io.objectbox:objectbox-processor:3.5.1"
 
     //Swipe refresh layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'

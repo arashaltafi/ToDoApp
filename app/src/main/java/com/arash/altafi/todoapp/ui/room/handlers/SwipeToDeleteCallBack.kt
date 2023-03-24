@@ -1,9 +1,9 @@
-package com.arash.altafi.todoapp.ui.handlers
+package com.arash.altafi.todoapp.ui.room.handlers
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.arash.altafi.todoapp.ui.RecyclerAdapter
-import com.arash.altafi.todoapp.ui.ToDoViewModel
+import com.arash.altafi.todoapp.ui.room.RecyclerAdapter
+import com.arash.altafi.todoapp.ui.room.ToDoViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
