@@ -1,15 +1,14 @@
-package com.arash.altafi.todoapp.ui.room.handlers
+package com.arash.altafi.todoapp.ui.room.adapter
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.arash.altafi.todoapp.ui.room.RecyclerAdapter
-import com.arash.altafi.todoapp.ui.room.ToDoViewModel
+import com.arash.altafi.todoapp.ui.room.ToDoRoomViewModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-abstract class SwipeToDeleteCallback(
-    private val viewModel: ToDoViewModel,
-    private val adapter: RecyclerAdapter
+abstract class SwipeToDeleteCallBackRoom(
+    private val viewModel: ToDoRoomViewModel,
+    private val adapter: RecyclerAdapterRoom
 ) :
     ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 

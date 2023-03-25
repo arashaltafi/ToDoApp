@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.ui.room
+package com.arash.altafi.todoapp.ui.objectBox
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,32 +9,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.arash.altafi.todoapp.databinding.FragmentHomeBinding
-import com.arash.altafi.todoapp.ui.room.handlers.SwipeToDeleteCallback
-import com.arash.altafi.todoapp.domain.models.ToDo
+import com.arash.altafi.todoapp.databinding.FragmentHomeObjectBoxBinding
+import com.arash.altafi.todoapp.domain.objectBox.models.ToDoObjectBox
+import com.arash.altafi.todoapp.ui.objectBox.adapter.RecyclerAdapterObjectBox
+import com.arash.altafi.todoapp.ui.objectBox.adapter.SwipeToDeleteCallbackObjectBox
 import com.arash.altafi.todoapp.utils.Constance
 import com.arash.altafi.todoapp.utils.getBackStackLiveData
+import com.arash.altafi.todoapp.utils.runAfter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeObjectBoxFragment : Fragment() {
 
-    private val toDoViewModel: ToDoViewModel by viewModels()
+    private val toDoViewModel: ToDoObjectBoxViewModel by viewModels()
 
     private val binding by lazy {
-        FragmentHomeBinding.inflate(layoutInflater)
+        FragmentHomeObjectBoxBinding.inflate(layoutInflater)
     }
 
     @Inject
-    lateinit var adapter: RecyclerAdapter
+    lateinit var adapter: RecyclerAdapterObjectBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,23 +48,16 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun init() = binding.apply {
-        adapter = RecyclerAdapter()
+        adapter = RecyclerAdapterObjectBox()
         rcTodo.adapter = adapter
 
-        /* // To Get All Data
-        CoroutineScope(Dispatchers.Main).launch {
-            toDoViewModel.getAllData()
-        }*/
-
-        lifecycleScope.launch {
-            toDoViewModel.liveToDo.collect {
-                adapter.setDataList(it)
-            }
+        toDoViewModel.liveToDo.observe(viewLifecycleOwner) {
+            adapter.setDataList(it)
         }
 
         fabAdd.setOnClickListener {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddToDoFragment()
+                HomeObjectBoxFragmentDirections.actionHomeObjectBoxFragmentToAddToDoObjectBoxFragment()
             )
         }
 
@@ -76,14 +66,15 @@ class HomeFragment : Fragment() {
             swipe.isRefreshing = false
         }
 
-        val swipeHandler = object : SwipeToDeleteCallback(toDoViewModel, adapter) {}
+        val swipeHandler =
+            object : SwipeToDeleteCallbackObjectBox(toDoViewModel, adapter) {}
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(rcTodo)
 
         adapter.onItemClick = { toDo ->
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToAddToDoFragment(
-                    id = toDo.id,
+                HomeObjectBoxFragmentDirections.actionHomeObjectBoxFragmentToAddToDoObjectBoxFragment(
+                    id = toDo.id.toInt(),
                     title = toDo.title,
                     description = toDo.description
                 )
@@ -92,35 +83,40 @@ class HomeFragment : Fragment() {
 
         adapter.onItemStateChange = { toDo, isChecked ->
             toDo.done = isChecked
-            MainScope().launch { toDoViewModel.update(toDo) }
+            toDoViewModel.update(toDo)
         }
 
     }
 
     private fun initBackStackObservers() {
-        findNavController().getBackStackLiveData<Triple<Int, String, String>>(Constance.BACK_FROM_ADD_TODO)
+        findNavController().getBackStackLiveData<Triple<Int, String, String>>(Constance.BACK_FROM_ADD_TODO_ObjectBox)
             ?.observe(this) {
                 val id = it.first
                 val title = it.second
                 val description = it.third
                 if (id != 0) {
-                    val toDo = ToDo(
-                        id = id,
+                    val toDo = ToDoObjectBox(
+                        id = id.toLong(),
                         title = title,
                         description = description,
                         done = false
                     )
-                    CoroutineScope(Dispatchers.Main).launch { toDoViewModel.update(toDo) }
+                    toDoViewModel.update(toDo)
                     Toast.makeText(requireContext(), "Todo Updated", Toast.LENGTH_SHORT).show()
                 } else {
-                    val toDo = ToDo(
+                    val toDo = ToDoObjectBox(
                         title = title,
                         description = description,
                         done = false
                     )
-                    CoroutineScope(Dispatchers.Main).launch { toDoViewModel.insert(toDo) }
+                    toDoViewModel.insert(toDo)
                     Toast.makeText(requireContext(), "New Todo Added", Toast.LENGTH_SHORT).show()
                 }
+
+                runAfter(200, {
+                    toDoViewModel.getAllData()
+                })
+
                 requireActivity().intent = Intent() // clear intent
             }
     }

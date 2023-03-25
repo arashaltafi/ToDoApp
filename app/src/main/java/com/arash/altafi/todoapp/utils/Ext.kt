@@ -6,6 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 
 inline fun <reified T> NavController.getBackStackLiveData(key: String): MutableLiveData<T>? =
@@ -86,4 +95,57 @@ inline fun <T> LiveData<T>.observeFreshly(
     val wrappedObserver = Observer<T> { t -> onChanged.invoke(t) }
     observe(owner, wrappedObserver)
     return wrappedObserver
+}
+
+
+fun <F> runAfter(
+    delay: Long, total: Long, fn: (Long) -> F, fc: () -> F,
+    unit: TimeUnit = TimeUnit.MILLISECONDS
+): Disposable {
+    return Flowable.interval(0, delay, unit)
+        .observeOn(AndroidSchedulers.mainThread())
+        .takeWhile { it != total }
+        .doOnNext { fn(it) }
+        .doOnComplete { fc() }
+        .subscribe()
+}
+
+fun <F> runAfter(
+    delay: Long, fx: () -> F, unit: TimeUnit = TimeUnit.MILLISECONDS
+): Disposable {
+    return Completable.timer(delay, unit)
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnComplete { fx() }
+        .subscribe()
+}
+
+fun <T> debounce(
+    waitMs: Long = 300L,
+    scope: CoroutineScope,
+    destinationFunction: (T) -> Unit
+): (T) -> Unit {
+    var debounceJob: Job? = null
+    return { param: T ->
+        debounceJob?.cancel()
+        debounceJob = scope.launch {
+            delay(waitMs)
+            destinationFunction(param)
+        }
+    }
+}
+
+fun <T> debounceCancelable(
+    waitMs: Long = 300L,
+    scope: CoroutineScope,
+    destinationFunction: (T) -> Unit
+): (T?) -> Unit {
+    var debounceJob: Job? = null
+    return { param: T? ->
+        debounceJob?.cancel()
+        if (param != null)
+            debounceJob = scope.launch {
+                delay(waitMs)
+                destinationFunction(param)
+            }
+    }
 }

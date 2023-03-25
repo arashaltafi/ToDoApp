@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.ui.room
+package com.arash.altafi.todoapp.ui.objectBox
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,19 +8,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.arash.altafi.todoapp.databinding.FragmentAddToDoBinding
+import com.arash.altafi.todoapp.databinding.FragmentAddToDoObjectBoxBinding
 import com.arash.altafi.todoapp.utils.Constance
 import com.arash.altafi.todoapp.utils.setBackStackLiveData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddToDoFragment : Fragment() {
+class AddToDoObjectBoxFragment : Fragment() {
 
     private val binding by lazy {
-        FragmentAddToDoBinding.inflate(layoutInflater)
+        FragmentAddToDoObjectBoxBinding.inflate(layoutInflater)
     }
 
-    private val args by navArgs<AddToDoFragmentArgs>()
+    private val args by navArgs<AddToDoObjectBoxFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,13 +53,12 @@ class AddToDoFragment : Fragment() {
             } else {
                 findNavController().apply {
                     setBackStackLiveData(
-                        Constance.BACK_FROM_ADD_TODO,
+                        Constance.BACK_FROM_ADD_TODO_ObjectBox,
                         Triple(args.id, title, description)
                     )
                 }
             }
         }
-
     }
 
 }

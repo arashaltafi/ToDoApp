@@ -7,18 +7,65 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.arash.altafi.todoapp.ui.room.HomeFragment"
+        android:name="com.arash.altafi.todoapp.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_addToDoFragment"
-            app:destination="@id/addToDoFragment" />
+            android:id="@+id/action_homeFragment_to_homeRoomFragment"
+            app:destination="@id/homeRoomFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_homeObjectBoxFragment"
+            app:destination="@id/homeObjectBoxFragment" />
     </fragment>
+
+    <!-- Room -->
     <fragment
-        android:id="@+id/addToDoFragment"
-        android:name="com.arash.altafi.todoapp.ui.room.AddToDoFragment"
-        android:label="fragment_add_to_do"
-        tools:layout="@layout/fragment_add_to_do">
+        android:id="@+id/homeRoomFragment"
+        android:name="com.arash.altafi.todoapp.ui.room.HomeRoomFragment"
+        android:label="fragment_home_room"
+        tools:layout="@layout/fragment_home_room">
+        <action
+            android:id="@+id/action_homeRoomFragment_to_addToDoRoomFragment"
+            app:destination="@id/addToDoRoomFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addToDoRoomFragment"
+        android:name="com.arash.altafi.todoapp.ui.room.AddToDoRoomFragment"
+        android:label="fragment_add_to_do_room"
+        tools:layout="@layout/fragment_add_to_do_room">
+        <argument
+            android:name="id"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="description"
+            android:defaultValue=""
+            app:argType="string" />
+    </fragment>
+
+    <!-- /////////////////////// -->
+
+    <!-- Object Box -->
+    <fragment
+        android:id="@+id/homeObjectBoxFragment"
+        android:name="com.arash.altafi.todoapp.ui.objectBox.HomeObjectBoxFragment"
+        android:label="fragment_home_objectBox"
+        tools:layout="@layout/fragment_home_object_box">
+        <action
+            android:id="@+id/action_homeObjectBoxFragment_to_addToDoObjectBoxFragment"
+            app:destination="@id/addToDoObjectBoxFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addToDoObjectBoxFragment"
+        android:name="com.arash.altafi.todoapp.ui.objectBox.AddToDoObjectBoxFragment"
+        android:label="fragment_add_to_do_objectBox"
+        tools:layout="@layout/fragment_add_to_do_object_box">
         <argument
             android:name="id"
             android:defaultValue="0"

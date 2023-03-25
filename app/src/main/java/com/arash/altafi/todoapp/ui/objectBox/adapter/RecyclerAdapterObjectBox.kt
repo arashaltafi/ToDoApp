@@ -1,4 +1,4 @@
-package com.arash.altafi.todoapp.ui.room
+package com.arash.altafi.todoapp.ui.objectBox.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import android.widget.CheckBox
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.arash.altafi.todoapp.R
-import com.arash.altafi.todoapp.domain.models.ToDo
+import com.arash.altafi.todoapp.domain.objectBox.models.ToDoObjectBox
 
-class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
+class RecyclerAdapterObjectBox : RecyclerView.Adapter<RecyclerAdapterObjectBox.ToDoHolder>() {
 
-    private val dataList = ArrayList<ToDo>()
-    var onItemStateChange: ((ToDo, Boolean) -> Unit)? = null
-    var onItemClick: ((ToDo) -> Unit)? = null
+    private val dataList = ArrayList<ToDoObjectBox>()
+    var onItemStateChange: ((ToDoObjectBox, Boolean) -> Unit)? = null
+    var onItemClick: ((ToDoObjectBox) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoHolder {
         val view: View =
@@ -42,15 +42,13 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ToDoHolder>() {
     override fun getItemCount(): Int = dataList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setDataList(list: List<ToDo>) {
+    fun setDataList(list: List<ToDoObjectBox>) {
         dataList.clear()
         dataList.addAll(list)
         notifyDataSetChanged()
     }
 
-    fun getToDo(position: Int): ToDo {
-        return dataList[position]
-    }
+    fun getToDo(position: Int): ToDoObjectBox = dataList[position]
 
     inner class ToDoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var checkBox: CheckBox = itemView.findViewById(R.id.chx)

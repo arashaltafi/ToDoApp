@@ -1,6 +1,7 @@
 package com.arash.altafi.todoapp.di
 
-import com.arash.altafi.todoapp.ui.room.RecyclerAdapter
+import com.arash.altafi.todoapp.ui.objectBox.adapter.RecyclerAdapterObjectBox
+import com.arash.altafi.todoapp.ui.room.adapter.RecyclerAdapterRoom
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,10 @@ object AdaptersModule {
 
     @FragmentScoped
     @Provides
-    fun provideRecyclerAdapter() = RecyclerAdapter()
+    fun provideRecyclerAdapterObjectBox() = RecyclerAdapterObjectBox()
+
+    @FragmentScoped
+    @Provides
+    fun provideRecyclerAdapterRoom() = RecyclerAdapterRoom()
 
 }

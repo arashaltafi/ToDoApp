@@ -2,8 +2,8 @@ package com.arash.altafi.todoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.arash.altafi.todoapp.domain.dao.ToDoDao
-import com.arash.altafi.todoapp.domain.db.ToDoDatabase
+import com.arash.altafi.todoapp.domain.room.dao.ToDoRoomDao
+import com.arash.altafi.todoapp.domain.room.db.ToDoRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,8 +17,8 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun getRoomDatabase(@ApplicationContext context: Context): ToDoDatabase {
-        return Room.databaseBuilder(context, ToDoDatabase::class.java, "toDo.db")
+    fun getRoomDatabase(@ApplicationContext context: Context): ToDoRoomDatabase {
+        return Room.databaseBuilder(context, ToDoRoomDatabase::class.java, "toDoRoom.db")
             .fallbackToDestructiveMigration()
             .build()
 
@@ -29,7 +29,7 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun getUserDao(templateDatabase: ToDoDatabase): ToDoDao {
+    fun getUserDao(templateDatabase: ToDoRoomDatabase): ToDoRoomDao {
         return templateDatabase.toDoDao()
     }
 }
