@@ -48,7 +48,6 @@ class HomeObjectBoxFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun init() = binding.apply {
-        adapter = RecyclerAdapterObjectBox()
         rcTodo.adapter = adapter
 
         toDoViewModel.liveToDo.observe(viewLifecycleOwner) {

@@ -52,7 +52,6 @@ class HomeRoomFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun init() = binding.apply {
-        adapter = RecyclerAdapterRoom()
         rcTodo.adapter = adapter
 
         /* // To Get All Data
